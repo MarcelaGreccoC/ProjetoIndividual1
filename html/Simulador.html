@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador </title>
+    <link rel="shortcut icon" href="gtech.png" type="image/x-icon"><!--coloca uma imagem do lado do título-->
+</head>
+
+<body>
+<script>
+    function Simular() {
+        var pega_nome_uva = nome_uva.value//pega o nome da uva
+
+        var pega_valor_uva = Number(valor_kg_uva.value)//pega o valor por kilo da uva
+
+        var pega_kg_metro_uva = Number(kg_metro_uva.value)//pega a quantidade de kilos por metro quadrado
+
+        var pega_metro_uva = Number(metro_uva.value)//pega a quantidade de metros quadrados
+
+        var calcula_kg_metro = pega_metro_uva * pega_kg_metro_uva//calcula a quantidade de kilos de uva por metro quadrado
+
+        var calcula_valor_uva = calcula_kg_metro * pega_valor_uva//calcula o valor total de uvas
+
+
+
+        var totalGanhosComNossoProjeto = calcula_valor_uva - calcula_ganho_futuro
+
+        var ganhoAtualtotal = calcula_valor_uva - calcula_ganho_atual
+
+
+        var calcula_ganho_atual = calcula_valor_uva * 0.625 //aplica a porcentagem de perda de uvas
+
+        var calcula_ganho_futuro = calcula_valor_uva * 0.98125 //95% da perda reduizida (95% de 37.5% = 0.35625) (0.37.5 - 0.35625 = 0.01875) (1 - 0.0125 = 0.98125)
+
+        var calcula_ganho_diferença = calcula_ganho_futuro - calcula_ganho_atual  //calcula a diferença do ganho atual, para o ganho futuro
+
+        var calcula_orçamento_ldr = ((pega_metro_uva / 10000) * 2) * 5.25//primeiro descobre quantos hectares tem, dps multiplica por 2 ldr, dps 5 reais, que é o valor do ldr atualmente e 25 centavos de um capacitor
+
+        var calcula_orçamento_dht11 = (pega_metro_uva / 78.5) * 14//calcula a quantidade de dht11 necessários (78.5 = área de um círculo com raio de 5m) vezes 14 reais, que é o valor atual do dht11
+
+        var calcula_orçamento_placa_mae = ((pega_metro_uva / 78.5) * 0.166666666667) * 50//a cada 6 dht11 (0.166666666667 * 6 = 1) ele retorna uma placa mãe e depois vezes 50  reais, que é o valor atual da placa mãe
+
+        var calcula_orçamento_fios = ((((pega_metro_uva / 78.5) * 3) + (((pega_metro_uva / 78.5) * 0.166666666667) * 2) + ((pega_metro_uva / 10000) * 3)) / 40) * 15//descobre a quantidade de fios para o dht11(3 fios para cada dht11), dps placa mãe(2 fios para 6 entradas), dps ldr(3 fios para cada ldr), depois divide por 40 fios que tem em uma caixinha, por fim, vezes 15 que é o valor de 40 fios no preço atual
+
+        var calcula_orçamento_total = calcula_orçamento_dht11 + calcula_orçamento_placa_mae + calcula_orçamento_ldr + calcula_orçamento_fios + 50//calcula o orçamento final (total dht11 + total placa mãe + 1 lm35 + fios + ldr que custa 50 reais, que é o valor atual)
+
+        if (calcula_orçamento_total <= 119.25) {
+            calcula_orçamento_total = 120
+        }
+        mensagem_simular.innerHTML = `Plantando ${pega_nome_uva}, atualmente você deve ganhar aproximadamente R$${calcula_ganho_atual}, se implementar nosso sistema você pode ganhar até
+         R$${calcula_ganho_diferença} a mais por safra!<br>
+         O custo dos equipamentos (não incliuí a taxa de serviço) que te passamos é de aproximadamente R$${calcula_orçamento_total}<br>
+         Ao todo, o lucro total do seu investimento atual é R$${ganhoAtualtotal}, porem com o nosso projeto, diminuindo suas perdas, sera de: R$${totalGanhosComNossoProjeto}
+         
+         `
+
+    }
+
+    function Calcular() {
+        var pega_hectar_metro = Number(hectar_metro.value)//pega a quantidade de hectares
+        var calcula_hectar_metro = pega_hectar_metro * 10000//transforma hectares para metro
+        mensagem_hectar_metro.innerHTML = `Com ${pega_hectar_metro} hectares, você tem ${calcula_hectar_metro}m²`
+    }
+</script>
+</body>
+</html>
